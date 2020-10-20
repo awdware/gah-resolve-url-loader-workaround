@@ -1,7 +1,7 @@
 {
-  "name": "@awdware/gah-plugin-template",
-  "version": "0.0.17",
-  "description": "Template for a new plugin for gah",
+  "name": "@awdware/resolve-url-loader-workaround",
+  "version": "0.0.1",
+  "description": "A hacky workaround for a node-sass/libsass bug that can be fixed with a resolve-url-loder flag",
   "main": "./lib/index.js",
   "scripts": {
     "prebuild": "del-cli lib",

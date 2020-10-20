@@ -1,3 +1,3 @@
-import { TemplatePlugin } from './template-plugin';
+import { ResolveUrlLoaderWorkaroundPlugin } from './resolve-url-loader-workaround-plugin';
 
-export default TemplatePlugin;
+export default ResolveUrlLoaderWorkaroundPlugin;
