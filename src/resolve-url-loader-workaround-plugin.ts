@@ -1,4 +1,4 @@
-import { GahPlugin, GahPluginConfig } from '@awdware/gah-shared';
+import { GahPlugin, GahPluginConfig } from '@gah/shared';
 
 import { ResolveUrlLoaderWorkaroundConfig } from './resolve-url-loader-workaround-config';
 
@@ -14,7 +14,7 @@ export class ResolveUrlLoaderWorkaroundPlugin extends GahPlugin {
   }
 
   public onInit() {
-    this.registerEventListener('PACKAGES_INSTALLED', (event) => {
+    this.registerEventListener('AFTER_INSTALL_PACKAGES', async (event) => {
 
       const node_modules = this.fileSystemService.join(event.module?.basePath!, 'node_modules');
 
@@ -33,11 +33,11 @@ export class ResolveUrlLoaderWorkaroundPlugin extends GahPlugin {
         this.loggerService.debug('Found resolve-url-loader\'s index.js file');
       }
 
-      const indexJs = this.fileSystemService.readFile(resolveUrlLoaderIndexJsPath);
+      const indexJs = await this.fileSystemService.readFile(resolveUrlLoaderIndexJsPath);
 
       if (indexJs.match(/removeCR\s*:\s*(\w+),/)?.[1] !== 'true') {
         const newIndexJs = indexJs.replace(/removeCR\s*:\s*(\w+),/, 'removeCR : true,');
-        this.fileSystemService.saveFile(resolveUrlLoaderIndexJsPath, newIndexJs);
+        await this.fileSystemService.saveFile(resolveUrlLoaderIndexJsPath, newIndexJs);
         this.loggerService.success('Fixed CR issue with resolve-url-loader');
       }
     });
